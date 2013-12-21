@@ -1,45 +1,71 @@
 require 'rubygems'
+require 'yaml'
 require 'twitter' # gem install twitter
 require 'pdf-reader' # gem install pdf-reader
 
-# 設定(適切に編集してください)
-file_name = "thesis.pdf" # ここで指定したPDFファイルのページ数の変化をつぶやきます
-CONSUMER_KEY = "" # https://dev.twitter.com/
-CONSUMER_SECRET = ""
-ACCESS_TOKEN = ""
-ACCESS_TOKEN_SECRET = ""
+# 設定の読み込み
+config = YAML.load_file("config.yaml")
+ENABLE_HASHTAG = config["ENABLE_HASHTAG"]
+pdf_path = config["PDF_FILE_PATH"]
+tex_path = config["TEX_FILE_PATH"]
+tex_file_encoding = config["TEX_FILE_ENCODING"]
+CONSUMER_KEY = config["CONSUMER_KEY"]
+CONSUMER_SECRET = config["CONSUMER_SECRET"]
+ACCESS_TOKEN = config["ACCESS_TOKEN"]
+ACCESS_TOKEN_SECRET = config["ACCESS_TOKEN_SECRET"]
 
 #
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
-record_file_name = file_name[0...file_name.rindex(".")] + "_page_count_history.csv"
+record_file_name = pdf_path[0...pdf_path.rindex(".")] + "_history.csv"
 last_count_time = 0
-last_count = 0
+last_page_count = 0
+last_character_count = 0
 if File.exist?(record_file_name)
   File.open(record_file_name, "r").each do |line|
-    last_count_time, last_count = $1.to_i, $2.to_i if /(\d+),(\d+)/ =~ line
+    last_count_time, last_page_count, last_character_count = $1.to_i, $2.to_i, $3.to_i if /(\d+),(\d+),(\d+)/ =~ line
     break
   end
 elsif
   File.open(record_file_name, "w").close
 end
 
-count = PDF::Reader.new(file_name).page_count
+page_count = PDF::Reader.new(pdf_path).page_count
+
+if File.exist?(tex_path)
+  content = File.open(tex_path, "r:#{tex_file_encoding}").read
+  character_count = content.split(//).size
+end
+
 File.open(record_file_name,'r+') do |f|
-  f.print "#{Time.now.to_i},#{count}\n#{File.open(record_file_name).read.chomp}"
+  f.print "#{Time.now.to_i},#{page_count},#{character_count}\n#{File.open(record_file_name).read.chomp}"
 end
 
-diff_count = count - last_count
-if diff_count == 0
-  message = "今日は卒論を1ページも書き進めませんでした"
-elsif diff_count > 0
-  message = "今日は卒論を#{diff_count}ページ書き進めました"
+diff_page_count = page_count - last_page_count
+diff_character_count = character_count - last_character_count
+
+# 進捗に関する投稿
+message_list = []
+if diff_page_count == 0
+  if diff_character_count == 0
+    message_list.push "今日は卒論を1文字も書き進めませんでした"
+  elsif diff_character_count > 0
+    message_list.push "今日は卒論を#{diff_character_count}文字書き進めました"
+  else
+    message_list.push "今日は卒論を#{-diff_character_count}文字削りました"
+  end
+elsif diff_page_count > 0
+  message_list.push "今日は卒論を#{diff_page_count}ページ書き進めました"
 else
-  message = "今日は卒論を#{-diff_count}ページ削りました"
+  message_list.push "今日は卒論を#{-diff_page_count}ページ削りました"
 end
 
-puts message
-puts "このつぶやきを投稿しますか？(y/n)"
-exit if STDIN.gets.chomp != "y"
+# 実績解除に関する投稿
+if page_count >= 50 && page_count/10 - last_page_count/10 > 0
+  message_list.push "[祝]卒論のページ数が#{(page_count/10)*10}ページを超えました"
+end
+if character_count >= 40000 && character_count/5000 - last_character_count/5000 > 0
+  message_list.push "[祝]卒論の文字数が#{(character_count/5000)*5000}文字を超えました"
+end
 
 begin
   client = Twitter::REST::Client.new do |config|
@@ -48,8 +74,18 @@ begin
     config.access_token        = ACCESS_TOKEN
     config.access_token_secret = ACCESS_TOKEN_SECRET
   end
-  client.update(message)
-  puts "投稿しました"
+  
+  message_list.each do |mes|
+    if ENABLE_HASHTAG
+      mes += " #卒論クエスト https://github.com/usi3/TweetProgressOfYourResearch"
+    end
+    puts mes
+    puts "このつぶやきを投稿しますか？(y/n)"
+    next if STDIN.gets.chomp != "y"
+    client.update(mes)
+    puts "投稿しました"
+  end
 rescue Twitter::Error
   puts "CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRETのどれかが間違っています"
+  puts "進捗の履歴は#{record_file_name}に記録されました"
 end

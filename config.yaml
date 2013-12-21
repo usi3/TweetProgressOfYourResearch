@@ -1,0 +1,18 @@
+# 設定ファイル
+# 
+# つぶやきにハッシュタグを加えるかどうか[true,false]
+ENABLE_HASHTAG: true
+# texファイルのパス
+# Windowsで絶対パスを指定する場合は\(バックスラッシュ)の扱いに気をつけてください
+TEX_FILE_PATH: "thesis.tex"
+# texファイルのエンコーディング
+TEX_FILE_ENCODING: "UTF-8"
+# pdfファイルのパス
+PDF_FILE_PATH: "thesis.pdf"
+# OAuth認証の設定
+# 次のURLで新規アプリケーションを作成してください
+# https://dev.twitter.com/
+CONSUMER_KEY: ""
+CONSUMER_SECRET: ""
+ACCESS_TOKEN: ""
+ACCESS_TOKEN_SECRET: ""
