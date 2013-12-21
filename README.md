@@ -1,6 +1,6 @@
 卒論クエスト
 ===========================
-TeXで書いている学位請求論文の進捗をTwitterに投稿するスクリプトです．
+TeXで書いている学位請求論文の進捗をTwitterに投稿するRubyスクリプトです．
 
 TeXファイルの文字数の変化やPDFファイルのページ数の変化をつぶやきます．
 一定のページ数や文字数を超えた場合は実績解除のお祝いメッセージもつぶやきます．
@@ -14,30 +14,34 @@ TeXファイルの文字数の変化やPDFファイルのページ数の変化�
 
 ライブラリの導入コマンド
 
-	> gem install twitter
-	> gem install pdf-reader
+```sh
+> gem install twitter
+> gem install pdf-reader
+```
 
 ## 設定
 `config.yaml`を適切に編集してから実行してください．
 
-	# 設定ファイル
-	# 
-	# つぶやきにハッシュタグを加えるかどうか[true,false]
-	ENABLE_HASHTAG: false
-	# texファイルのパス
-	# Windowsで絶対パスを指定する場合は\(バックスラッシュ)の扱いに気をつけてください
-	TEX_FILE_PATH: "thesis.tex"
-	# texファイルのエンコーディング
-	TEX_FILE_ENCODING: "UTF-8"
-	# pdfファイルのパス
-	PDF_FILE_PATH: "thesis.pdf"
-	# OAuth認証の設定
-	# 次のURLで新規アプリケーションを作成してください
-	# https://dev.twitter.com/
-	CONSUMER_KEY: ""
-	CONSUMER_SECRET: ""
-	ACCESS_TOKEN: ""
-	ACCESS_TOKEN_SECRET: ""
+```ruby
+# 設定ファイル
+# 
+# つぶやきにハッシュタグを加えるかどうか[true,false]
+ENABLE_HASHTAG: false
+# texファイルのパス
+# Windowsで絶対パスを指定する場合は\(バックスラッシュ)の扱いに気をつけてください
+TEX_FILE_PATH: "thesis.tex"
+# texファイルのエンコーディング
+TEX_FILE_ENCODING: "UTF-8"
+# pdfファイルのパス
+PDF_FILE_PATH: "thesis.pdf"
+# OAuth認証の設定
+# 次のURLで新規アプリケーションを作成してください
+# https://dev.twitter.com/
+CONSUMER_KEY: ""
+CONSUMER_SECRET: ""
+ACCESS_TOKEN: ""
+ACCESS_TOKEN_SECRET: ""
+```
 
 ## 使用例
 「進捗ありません・・・」
