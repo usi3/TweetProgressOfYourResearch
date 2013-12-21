@@ -4,15 +4,11 @@ require 'twitter' # gem install twitter
 require 'pdf-reader' # gem install pdf-reader
 
 # 設定の読み込み
-config = YAML.load_file("config.yaml")
-ENABLE_HASHTAG = config["ENABLE_HASHTAG"]
-pdf_path = config["PDF_FILE_PATH"]
-tex_path = config["TEX_FILE_PATH"]
-tex_file_encoding = config["TEX_FILE_ENCODING"]
-CONSUMER_KEY = config["CONSUMER_KEY"]
-CONSUMER_SECRET = config["CONSUMER_SECRET"]
-ACCESS_TOKEN = config["ACCESS_TOKEN"]
-ACCESS_TOKEN_SECRET = config["ACCESS_TOKEN_SECRET"]
+YCONF = YAML.load_file("config.yaml")
+enable_hashtag = YCONF["ENABLE_HASHTAG"]
+pdf_path = YCONF["PDF_FILE_PATH"]
+tex_path = YCONF["TEX_FILE_PATH"]
+tex_file_encoding = YCONF["TEX_FILE_ENCODING"]
 
 #
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
@@ -69,14 +65,14 @@ end
 
 begin
   client = Twitter::REST::Client.new do |config|
-    config.consumer_key        = CONSUMER_KEY
-    config.consumer_secret     = CONSUMER_SECRET
-    config.access_token        = ACCESS_TOKEN
-    config.access_token_secret = ACCESS_TOKEN_SECRET
+    config.consumer_key        = YCONF["CONSUMER_KEY"]
+    config.consumer_secret     = YCONF["CONSUMER_SECRET"]
+    config.access_token        = YCONF["ACCESS_TOKEN"]
+    config.access_token_secret = YCONF["ACCESS_TOKEN_SECRET"]
   end
   
   message_list.each do |mes|
-    if ENABLE_HASHTAG
+    if enable_hashtag
       mes += " #卒論クエスト https://github.com/usi3/TweetProgressOfYourResearch"
     end
     puts mes
