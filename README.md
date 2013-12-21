@@ -5,6 +5,18 @@ TeXで書いている学位請求論文の進捗をTwitterに投稿するスク�
 TeXファイルの文字数の変化やPDFファイルのページ数の変化をつぶやきます．
 一定のページ数や文字数を超えた場合は実績解除のお祝いメッセージもつぶやきます．
 
+## 依存ライブラリ
+このプログラムを実行するためにはRubyの実行環境が必要です．
+また，次の2つのライブラリに依存しています．
+
+- [sferik/twitter](https://github.com/sferik/twitter)
+- [yob/pdf-reader](https://github.com/yob/pdf-reader)
+
+ライブラリの導入コマンド
+
+	> gem install twitter
+	> gem install pdf-reader
+
 ## 設定
 `config.yaml`を適切に編集してから実行してください．
 
@@ -27,14 +39,8 @@ TeXファイルの文字数の変化やPDFファイルのページ数の変化�
 	ACCESS_TOKEN: ""
 	ACCESS_TOKEN_SECRET: ""
 
-## 依存ライブラリ
-このプログラムを実行するためには[sferik/twitter](https://github.com/sferik/twitter)と[yob/pdf-reader](https://github.com/yob/pdf-reader)が必要です．
-
-	gem install twitter
-	gem install pdf-reader
-
 ## 使用例
-進捗ありません・・・
+「進捗ありません・・・」
 
 	>ruby tweet_progress.rb
 	今日は卒論を1文字も書き進めませんでした
@@ -42,14 +48,14 @@ TeXファイルの文字数の変化やPDFファイルのページ数の変化�
 	y
 	投稿しました
 
-進捗はありますが・・・わざわざつぶやきたくありません・・・・・・
+「進捗はありますが・・・わざわざつぶやく必要性を感じません．どうしてつぶやくんですか？」
 
 	>ruby tweet_progress.rb
 	[祝]卒論のページ数が50ページを超えました
 	このつぶやきを投稿しますか？(y/n)
 	n
 
-あ！今日は！著しい進捗がありました！！！
+「あ！今日は！著しい進捗がありました！！！」
 
 	>ruby tweet_progress.rb
 	[祝]卒論の文字数が40000文字を超えました
