@@ -62,4 +62,11 @@ TeXファイルの文字数の変化やPDFファイルのページ数の変化�
 
 	<UNIX Time>,<TeXファイルの文字数>,<PDFファイルのページ数>
 
-この機能はTwitterのOAuth認証に関する設定がなくても動作します．
+この機能はTwitterのOAuth認証に関する設定がなくても動作します．この場合の使用例を次に示します．
+
+	>ruby tweet_progress.rb
+	今日は卒論を1文字も書き進めませんでした
+	このつぶやきを投稿しますか？(y/n)
+	y
+	CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRETのどれかが間違っています
+	進捗の履歴はthesis_history.csvに記録されました
