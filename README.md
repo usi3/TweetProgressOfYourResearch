@@ -7,7 +7,7 @@ TeXファイルの文字数の変化やPDFファイルのページ数の変化�
 
 ## 依存ライブラリ
 このプログラムを実行するためにはRubyの実行環境が必要です．
-また，次の2つのライブラリに依存しています．
+次の2つのライブラリに依存しています．
 
 - [sferik/twitter](https://github.com/sferik/twitter)
 - [yob/pdf-reader](https://github.com/yob/pdf-reader)
@@ -64,7 +64,7 @@ TeXファイルの文字数の変化やPDFファイルのページ数の変化�
 	投稿しました
 
 ## 進捗のロギング
-このプログラムは起動と同時に`PDF_FILE_PATH`から拡張子を除き`_history.csv`を付加したパスに次のフォーマットで進捗を記録します．
+このプログラムは起動してすぐに`PDF_FILE_PATH`から拡張子を除いて`_history.csv`を付加したパスに次のフォーマットで進捗を記録します．
 
 	<UNIX Time>,<TeXファイルの文字数>,<PDFファイルのページ数>
 
