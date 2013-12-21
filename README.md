@@ -11,7 +11,7 @@ TeXファイルの文字数の変化やPDFファイルのページ数の変化�
 	# 設定ファイル
 	# 
 	# つぶやきにハッシュタグを加えるかどうか[true,false]
-	ENABLE_HASHTAG: true
+	ENABLE_HASHTAG: false
 	# texファイルのパス
 	# Windowsで絶対パスを指定する場合は\(バックスラッシュ)の扱いに気をつけてください
 	TEX_FILE_PATH: "thesis.tex"
