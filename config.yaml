@@ -12,7 +12,7 @@ PDF_FILE_PATH: "thesis.pdf"
 # Xクエスト（Xには"卒論", "修論", "博論"などを指定）
 THESIS_NAME: "卒論"
 # OAuth認証の設定
-# 次の開発者向けAPI開設ページで新規アプリケーションを作成してください
+# 次の開発者向けページで新規アプリケーションを作成してください
 # https://dev.twitter.com/
 CONSUMER_KEY: ""
 CONSUMER_SECRET: ""
