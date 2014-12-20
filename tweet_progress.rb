@@ -6,11 +6,11 @@ require 'pdf-reader' # gem install pdf-reader
 
 # 設定の読み込み
 YCONF = YAML.load_file("config.yaml")
-enable_hashtag = YCONF["ENABLE_HASHTAG"]
-pdf_path = YCONF["PDF_FILE_PATH"]
-tex_path = YCONF["TEX_FILE_PATH"]
+enable_hashtag    = YCONF["ENABLE_HASHTAG"]
+pdf_path          = YCONF["PDF_FILE_PATH"]
+tex_path          = YCONF["TEX_FILE_PATH"]
 tex_file_encoding = YCONF["TEX_FILE_ENCODING"]
-thesis_name = YCONF["THESIS_NAME"]
+thesis_name       = YCONF["THESIS_NAME"]
 
 #
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
