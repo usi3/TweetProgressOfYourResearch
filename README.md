@@ -1,13 +1,14 @@
 卒論クエスト
 ===========================
 TeXで書いている学位請求論文の進捗をTwitterに投稿するRubyスクリプトです．
+設定すれば「修論クエスト」および「博論クエスト」にも変更可能です．
 
 TeXファイルの文字数の変化やPDFファイルのページ数の変化をつぶやきます．
 一定のページ数や文字数を超えた場合は実績解除のお祝いメッセージもつぶやきます．
 
 ## 依存ライブラリ
 このプログラムを実行するためにはRubyの実行環境が必要です．
-次の2つのライブラリに依存しています．
+次の二つのライブラリに依存しています．
 
 - [sferik/twitter](https://github.com/sferik/twitter)
 - [yob/pdf-reader](https://github.com/yob/pdf-reader)
@@ -34,8 +35,10 @@ TEX_FILE_PATH: "thesis.tex"
 TEX_FILE_ENCODING: "UTF-8"
 # pdfファイルのパス
 PDF_FILE_PATH: "thesis.pdf"
+# Xクエスト（Xには"卒論", "修論", "博論"などを指定）
+THESIS_NAME: "卒論"
 # OAuth認証の設定
-# 次のURLで新規アプリケーションを作成してください
+# 次の開発者向けAPI開設ページで新規アプリケーションを作成してください
 # https://dev.twitter.com/
 CONSUMER_KEY: ""
 CONSUMER_SECRET: ""

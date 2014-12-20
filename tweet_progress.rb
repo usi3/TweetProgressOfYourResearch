@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 require 'rubygems'
 require 'yaml'
 require 'twitter' # gem install twitter
@@ -9,6 +10,7 @@ enable_hashtag = YCONF["ENABLE_HASHTAG"]
 pdf_path = YCONF["PDF_FILE_PATH"]
 tex_path = YCONF["TEX_FILE_PATH"]
 tex_file_encoding = YCONF["TEX_FILE_ENCODING"]
+thesis_name = YCONF["THESIS_NAME"]
 
 #
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
@@ -43,24 +45,24 @@ diff_character_count = character_count - last_character_count
 message_list = []
 if diff_page_count == 0
   if diff_character_count == 0
-    message_list.push "今日は卒論を1文字も書き進めませんでした"
+    message_list.push "今日は#{thesis_name}を1文字も書き進めませんでした"
   elsif diff_character_count > 0
-    message_list.push "今日は卒論を#{diff_character_count}文字書き進めました"
+    message_list.push "今日は#{thesis_name}を#{diff_character_count}文字書き進めました"
   else
-    message_list.push "今日は卒論を#{-diff_character_count}文字削りました"
+    message_list.push "今日は#{thesis_name}を#{-diff_character_count}文字削りました"
   end
 elsif diff_page_count > 0
-  message_list.push "今日は卒論を#{diff_page_count}ページ書き進めました"
+  message_list.push "今日は#{thesis_name}を#{diff_page_count}ページ書き進めました"
 else
-  message_list.push "今日は卒論を#{-diff_page_count}ページ削りました"
+  message_list.push "今日は#{thesis_name}を#{-diff_page_count}ページ削りました"
 end
 
 # 実績解除に関する投稿
 if page_count >= 50 && page_count/10 - last_page_count/10 > 0
-  message_list.push "[祝]卒論のページ数が#{(page_count/10)*10}ページを超えました"
+  message_list.push "[祝]#{thesis_name}のページ数が#{(page_count/10)*10}ページを超えました"
 end
 if character_count >= 40000 && character_count/5000 - last_character_count/5000 > 0
-  message_list.push "[祝]卒論の文字数が#{(character_count/5000)*5000}文字を超えました"
+  message_list.push "[祝]#{thesis_name}の文字数が#{(character_count/5000)*5000}文字を超えました"
 end
 
 begin
@@ -73,7 +75,7 @@ begin
   
   message_list.each do |mes|
     if enable_hashtag
-      mes += " #卒論クエスト https://github.com/usi3/TweetProgressOfYourResearch"
+      mes += " ##{thesis_name}クエスト https://github.com/usi3/TweetProgressOfYourResearch"
     end
     puts mes
     puts "このつぶやきを投稿しますか？(y/n)"
